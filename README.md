@@ -17,9 +17,9 @@
 * [LinearRegression](./regression/LinearRegression.py)
   这种方法通过对矩阵 X 奇异值分解（SVD）的方式来计算最小二乘的解。如果 X 是一个(n, p)大小的矩阵,那么代价为 O(np^2),假设 n \geq p.
 
-###  岭回归
+### 岭回归
 
-    \underset{w}{min\,} {{|| X w - y||\_2}^2 + \alpha {||w||\_2}^2}
+\underset{w}{min\,} {{|| X w - y||\_2}^2 + \alpha {||w||\_2}^2}
 
 * [RidgeRegression](./regression/RidgeRegression.py)
 
