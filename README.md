@@ -19,8 +19,11 @@
 
 ### 岭回归
 
-\underset{w}{min\,} {{|| X w - y||\_2}^2 + \alpha {||w||\_2}^2}
-
 * [RidgeRegression](./regression/RidgeRegression.py)
+  RidgeCV 实现了带缺省 alpha 参数的交叉验证的岭回归模型.这个对象和 GridSearchCV 除了它默认为广义交叉验证(GCV),其他工作方式一样。
+* [Ridge2](./regression/Ridge2.py)
 
-###
+### Lasso
+
+* []()
+  Lasso 是一种估计稀疏线性模型的方法.由于它倾向具有少量参数值的情况，对于给定解决方案是相关情况下，有效的减少了变量数量。 因此，Lasso 及其变种是压缩感知(压缩采样)的基础。Lasso 类实现使用了坐标下降法(一种非梯度优化算法) 来拟合系数
