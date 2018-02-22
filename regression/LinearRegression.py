@@ -1,4 +1,5 @@
-print(__doc__)
+# LinearRegression
+
 
 import matplotlib.pyplot as plt
 import numpy as np
