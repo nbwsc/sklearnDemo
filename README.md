@@ -45,6 +45,20 @@
 
 ### 最小角回归 Least Angle Regression
 
+    最小角回归是针对高维数据的回归算法，由Bradley Efron, Trevor Hastie, Iain Johnstone and Robert Tibshirani开发。
+
+* LARS 的优势如下:
+
+    当 p >> n 时计算是非常高效的。（比如当维数远大于点数）它和前向选择计算速度差不多一样块，并且和普通最小二乘复杂度一样。它生成一个完整的分段线性的解的路径，这对于交叉验证或者类似的尝试来调整模型是有效的。如果两个变量的相应总是相同，那么它们的系数应该有近似相同的增长速率。因此这算法和直觉判断一样，并且增长总是稳定的。这个算法对于其他评估模型来说很容易被修改来产生解，和 Lasso 差不多。（待修改）
+    It is easily modified to produce solutions for other estimators, like the Lasso.
+
+* LARS 方法的缺点包括：
+
+    因为 LARS 是基于剩余误差多次迭代拟合,所以对噪声的影响比较敏感。这个问题在 Efron et al. (2004) Annals of Statistics article 这篇文章中讨论部分详细谈论了。
+    LARS 模型可以使用 estimator Lars ，或者底层实现 lars_path 。
+
+### LARS Lasso
+
 * [LARS Lasso](./regression/LARS_Lasso.py)
 
     LARS 的优势如下:
@@ -53,3 +67,28 @@
     LARS 方法的缺点包括：
 
     因为 LARS 是基于剩余误差多次迭代拟合,所以对噪声的影响比较敏感。这个问题在 Efron et al. (2004) Annals of Statistics article 这篇文章中讨论部分详细谈论了。
+
+### 正交匹配跟踪 Orthogonal Matching Pursuit (OMP)
+
+* [OMP](./regression/omp.py)Using orthogonal matching pursuit for recovering a sparse signal from a noisy measurement encoded with a dictionary
+
+    OrthogonalMatchingPursuit and orthogonal_mp 实现了一个用来逼近在非零系数的个数上加约束的线性模型的拟合的 OMP 算法(比如 L 0 pseudo-norm)
+
+    和 Least Angle Regression 最小角回归 一样，作为一个前向特征选择方法，OMP 可以用一个固定非零的数来逼近最优的解向量:
+
+### 贝叶斯回归 Bayesian Regression
+
+* 贝叶斯回归的优势：
+
+    * 根据数据调节参数
+    * 在估计过程中包含正则化参数
+
+* 贝叶斯回归劣势:
+
+    模型的推理比较耗时
+
+- [贝叶斯岭回归 BayesianRidge](./regression/bayesian_ridge.py)
+
+    由于贝叶斯框架，权重的发现同 普通最小二乘法 略有不同。然而 Bayesian Ridge Regression 对于病态问题更具有鲁棒性。
+
+- [Automatic Relevance Determination - ARD](./regression/ard.py)`ARDRegression` 和 `Bayesian Ridge Regression`非常相似，但是主要针对稀疏权重 w 。 ARDRegression 提出一个不同于 w 的先验，通过弱化高斯分布为球形的假设。
