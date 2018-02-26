@@ -19,6 +19,7 @@ start = datetime.datetime(2017, 1, 1)
 end = datetime.datetime(2018, 2, 20)
 # 从互联网获取数据
 df = data.DataReader("AAPL", "google", start, end)
+df.to_csv('AAPL-google-origin.csv')
 # print(df.head())
 df = df[['Open',  'High',  'Low',  'Close', 'Volume']]
 df['HL_PCT'] = (df['High'] - df['Low']) / df['Close'] * 100.0
@@ -26,31 +27,33 @@ df['PCT_change'] = (df['Close'] - df['Open']) / df['Open'] * 100.0
 df = df[['Close', 'HL_PCT', 'PCT_change', 'Volume']]
 # print(df.head())
 print(len(df))
-df.to_csv('AAPL-google.csv')
+df.to_csv('AAPL-google1.csv')
 forecast_col = 'Close'
 df.fillna(value=-99999, inplace=True)
 forecast_out = int(math.ceil(0.01 * len(df)))
 # 预测forecast_out天后的
 print("forecast_out", forecast_out)
+df.to_csv('AAPL-google-origin2.csv')
 
 df['label'] = df[forecast_col].shift(-forecast_out)
+df.to_csv('AAPL-google-origin3.csv')
 
 print(df.shape)
 print(df.tail())
 X = np.array(df.drop(['label'], 1))
 
-
+# 正交化
 X = preprocessing.scale(X)
 
 X_lately = X[-forecast_out:]
 X = X[:-forecast_out]
 df.dropna(inplace=True)
-print(X)
-print(X_lately)
+print('X', X)
+print('X_lately', X_lately)
 y = np.array(df['label'])
 # print(y)
-print(X.shape)
-print(y.shape)
+# print(X.shape)
+# print(y.shape)
 X_train, X_test, y_train, y_test = cross_validation.train_test_split(
     X, y, test_size=0.2)
 
@@ -58,7 +61,7 @@ clf = LinearRegression()
 clf.fit(X_train, y_train)
 accuracy = clf.score(X_test, y_test)
 
-print(accuracy)
+# print(accuracy)
 
 forecast_set = clf.predict(X_lately)
 
@@ -70,7 +73,7 @@ df['Forecast'] = np.nan
 
 last_date = df.iloc[-1].name
 last_unix = last_date.timestamp()
-print(last_date, last_unix)
+# print(last_date, last_unix)
 one_day = 86400
 next_unix = last_unix + one_day
 
@@ -80,7 +83,7 @@ for i in forecast_set:
     df.loc[next_date] = [np.nan for _ in range(len(df.columns)-1)]+[i]
 
 
-print(df.tail())
+# print(df.tail())
 
 df['Close'].plot()
 df['Forecast'].plot()
