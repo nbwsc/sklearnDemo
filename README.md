@@ -173,3 +173,48 @@ SGD 已经被成功应用到大规模和稀疏机器学习问题上，通常为�
 ### 朴素贝叶斯(Naive Bayes)
 
 ### 决策树(Decision Trees)
+
+## 非监督学习 Unsupervised learning
+
+### clustering methods
+
+* MiniBatchMeans
+
+* AffinityPropagation
+
+* MeanShift
+
+* SpectralClustering
+
+* Ward
+
+* AgglomerativeClustering
+
+* DBSCAN
+
+* Birch
+
+### K-means(Lloyd’s algorithm)
+
+* Mini Batch K-Means
+
+    K-Means (分批处理) 算法是常用的聚类算法，但其算法本身存在一定的问题，例如在大数据量下的计算时间过长就是一个重要问题。为此，Mini Batch K-Means，这个基于 K-Means 的变种聚类算法应运而生。
+    实际上，这种思路不仅应用于 K-Means 聚类，还广泛应用于梯度下降、深度网络等机器学习和深度学习算法。
+
+### Affinity Propagation
+
+    AP 算法的基本思想是将全部样本看作网络的节点，然后通过网络中各条边的消息传递计算出各样本的聚类中心。聚类过程中，共有两种消息在各节点间传递，分别是吸引度( responsibility)和归属度(availability) 。AP 算法通过迭代过程不断更新每一个点的吸引度和归属度值，直到产生 m 个高质量的 Exemplar（类似于质心），同时将其余的数据点分配到相应的聚类中。
+
+    1. 无需指定聚类“数量”参数。AP 聚类不需要指定 K（经典的 K-Means）或者是其他描述聚类个数（SOM 中的网络结构和规模）的参数，这使得先验经验成为应用的非必需条件，人群应用范围增加。
+    2. 明确的质心（聚类中心点）。样本中的所有数据点都可能成为 AP 算法中的质心，叫做 Examplar，而不是由多个数据点求平均而得到的聚类中心（如 K-Means）。
+    3. 对距离矩阵的对称性没要求。AP 通过输入相似度矩阵来启动算法，因此允许数据呈非对称，数据适用范围非常大。
+    4. 初始值不敏感。多次执行 AP 聚类算法，得到的结果是完全一样的，即不需要进行随机选取初值步骤（还是对比 K-Means 的随机初始值）。
+    5. 算法复杂度较高，为 O(N*N*logN)，而 K-Means 只是 O(N\*K)的复杂度。因此当 N 比较大时(N>3000)，AP 聚类算法往往需要算很久。
+    6. 若以误差平方和来衡量算法间的优劣，AP 聚类比其他方法的误差平方和都要低。（无论 k-center clustering 重复多少次，都达不到 AP 那么低的误差平方和）
+
+    缺点
+
+    1. AP 聚类应用中需要手动指定 Preference 和 Damping factor，这其实是原有的聚类“数量”控制的变体。
+    2. 算法较慢。由于 AP 算法复杂度较高，运行时间相对 K-Means 长，这会使得尤其在海量数据下运行时耗费的时间很多。
+
+### Mean Shift
